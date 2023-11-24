@@ -15,10 +15,14 @@ enum class Signs(val char: Char) {
 }
 class Maze private constructor() {
     private var mazeList: MutableList<MutableList<Signs>> = mutableListOf()
-    private var goalPos: Point = Point(-1, -1)
-    private var startPos: Point = Point(-1, -1)
-    private var colCount: Int = -1
-    private var rowCount: Int = -1
+    var goalPos: Point = Point(-1, -1)
+        private set
+    var startPos: Point = Point(-1, -1)
+        private set
+    var colCount: Int = -1
+        private set
+    var rowCount: Int = -1
+        private set
     companion object {
         fun fromFile(pathToFile: String) : Maze {
             val maze = Maze()

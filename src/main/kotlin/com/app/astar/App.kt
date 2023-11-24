@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader
 import javafx.scene.Scene
 import javafx.stage.Stage
 
+
 class App : Application() {
     override fun start(stage: Stage) {
         val fxmlLoader = FXMLLoader(App::class.java.getResource("maze-view.fxml"))
@@ -17,7 +18,9 @@ class App : Application() {
     companion object {
         @JvmStatic
         fun main(args: Array<String>) {
-            launch(App::class.java)
+            //launch(App::class.java)
+
+
         }
     }
 }

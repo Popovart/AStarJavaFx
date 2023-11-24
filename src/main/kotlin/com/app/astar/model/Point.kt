@@ -14,6 +14,12 @@ class Point (val col: Int, val row: Int) : Comparable<Point> {
         return col == other.col && row == other.row
     }
 
+    override fun hashCode(): Int {
+        var result = col
+        result = 31 * result + row
+        return result
+    }
+
     override fun compareTo(other: Point): Int {
         if (this.col == other.col && this.row == other.row) {
             return 0

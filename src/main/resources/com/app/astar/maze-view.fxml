@@ -10,17 +10,19 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox alignment="TOP_CENTER" spacing="20.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.astar.controller.MazeController">
+<VBox alignment="TOP_CENTER" minHeight="247.0" minWidth="412.5" spacing="20.0" styleClass="main" stylesheets="@css/app.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.app.astar.controller.MazeController">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
    <HBox>
       <children>
-         <Button fx:id="fileButton" mnemonicParsing="false" onMouseClicked="#onHelloButtonClick" text="File" />
+         <Button fx:id="fileButton" mnemonicParsing="false" onMouseClicked="#onFileButtonClick" text="File" />
          <Region maxWidth="20.0" minWidth="20.0" HBox.hgrow="ALWAYS" />
-         <Button fx:id="startButton" minWidth="20.0" mnemonicParsing="false" text="Start Algorithm" />
+         <Button fx:id="createMazeButton" mnemonicParsing="false" text="Create maze" />
          <Region maxWidth="20.0" minWidth="20.0" />
-         <Button cancelButton="true" mnemonicParsing="false" text="X" />
+         <Button fx:id="startButton" disable="true" minWidth="20.0" mnemonicParsing="false" onMouseClicked="#onStartButtonClick" text="Start Algorithm" />
+         <Region maxWidth="20.0" minWidth="20.0" />
+         <Button fx:id="byStepsButton" disable="true" mnemonicParsing="false" text="By steps mod" />
       </children>
    </HBox>
    <Label fx:id="label" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">
@@ -29,7 +31,7 @@
       </padding>
    </Label>
    <Region maxHeight="50.0" />
-   <GridPane fx:id="grid">
+   <GridPane fx:id="grid" styleClass="grid-pane">
      <columnConstraints>
        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />

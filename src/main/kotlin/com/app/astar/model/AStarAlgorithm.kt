@@ -1,6 +1,7 @@
 package com.app.astar.model
 
 import java.util.*
+import kotlin.system.measureTimeMillis
 
 
 val DIRECTIONS = listOf(
@@ -52,6 +53,8 @@ class AStarAlgorithm (
     private var closedSet: LinkedHashSet<Point> = LinkedHashSet<Point>()
     private var path: MutableList<Point> = mutableListOf()
 
+
+
     init {
         openSet.add(maze.startPos)
 
@@ -59,11 +62,17 @@ class AStarAlgorithm (
         // на данный момент это бессмысленная операция, так как там и так одни 0
         priceMatrix[maze.startPos.col][maze.goalPos.row].g = 0
 
-        findPath()
+        val timeTakenMillis = measureTimeMillis {
+            // Ваш алгоритм или блок кода
+            findPath()
+        }
+
+        val timeTakenSeconds = timeTakenMillis / 1000.0
+        println("Time taken by function findPath: $timeTakenSeconds seconds")
     }
 
     private fun noPathInfo(){
-        println("It's impossible to find goal position. Walls nearby")
+        println("It's impossible to find the goal position. Walls nearby")
     }
     private fun pathFoundInfo(){
         println("Goal position has been achieved")
@@ -178,5 +187,27 @@ class AStarAlgorithm (
         path.reverse()
 
     }
+
+    fun printMaze(){
+        maze.print()
+    }
+
+    fun updateMazeByClosedSet(){
+        for (point in closedSet){
+            if (point != maze.startPos && point != maze.goalPos){
+                maze[point] = Signs.PATH
+            }
+        }
+    }
+
+    fun printSolvedMaze(){
+        maze.printSolved(path)
+    }
+
+    fun printMazeBySteps(){
+        maze.printBySteps(path)
+    }
+
+
 
 }

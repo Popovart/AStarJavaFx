@@ -92,14 +92,24 @@ class Maze private constructor() {
         return this[point] == Signs.WALL
     }
 
-    fun printBySteps(path: ArrayList<Point>){
-        val tempMaze = this
+    fun printBySteps(path: MutableList<Point>){
+        val tempMaze = copyOf(this)
         for (point in path){
             if (point != startPos && point != goalPos){
                 tempMaze[point] = Signs.PATH
             }
             tempMaze.print()
         }
+    }
+
+    fun printSolved(path: MutableList<Point>){
+        val tempMaze = copyOf(this)
+        for (point in path){
+            if (point != startPos && point != goalPos){
+                tempMaze[point] = Signs.PATH
+            }
+        }
+        tempMaze.print()
     }
 
     fun print() {

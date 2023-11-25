@@ -1,0 +1,13 @@
+Button {
+  -fx-background-color: crimson;
+  -fx-text-fill: white;
+  -fx-cursor: hand;
+}
+Button:hover {
+  -fx-background-color: #9a112e;
+}
+
+.grid-pane {
+  -fx-border-color: #346dc2;
+  -fx-border-width: 2px;
+}

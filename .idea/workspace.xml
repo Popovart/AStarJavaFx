@@ -4,16 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1508b47e-872a-4315-9c81-76d6a2f0b2c3" name="Changes" comment="creation the base functionality of the AStarAlgorithm">
-      <change afterPath="$PROJECT_DIR$/.idea/watcherTasks.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/com/app/astar/css/app.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/com/app/astar/sass/app.sass" afterDir="false" />
+    <list default="true" id="1508b47e-872a-4315-9c81-76d6a2f0b2c3" name="Changes" comment="sass/css implementing and minor controller code changes">
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/com/app/astar/controller/GridController.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/kotlin/com/app/astar/model/Signs.kt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/com/app/astar/modalWindow-view.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/app/astar/App.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/app/astar/App.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/app/astar/controller/MazeController.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/app/astar/controller/MazeController.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/app/astar/model/AStarAlgorithm.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/app/astar/model/AStarAlgorithm.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/app/astar/model/Maze.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/app/astar/model/Maze.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/module-info.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/app/astar/css/app.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/app/astar/css/app.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/com/app/astar/maze-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/app/astar/maze-view.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/app/astar/sass/app.sass" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/app/astar/sass/app.sass" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -23,9 +25,9 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="FxmlFile" />
         <option value="Sass File" />
         <option value="CSS File" />
+        <option value="FxmlFile" />
         <option value="Kotlin Class" />
       </list>
     </option>
@@ -47,26 +49,26 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "master",
-    "list.type.of.created.stylesheet": "CSS",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0",
-    "settings.editor.selected.configurable": "watcher.settings",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;watcher.settings&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/main/resources/com/app/astar/sass" />
@@ -101,7 +103,9 @@
       <workItem from="1700753927364" duration="12313000" />
       <workItem from="1700820327475" duration="14061000" />
       <workItem from="1700930432984" duration="7199000" />
-      <workItem from="1700941009251" duration="5279000" />
+      <workItem from="1700941009251" duration="5598000" />
+      <workItem from="1701169234669" duration="21495000" />
+      <workItem from="1701204776963" duration="3844000" />
     </task>
     <task id="LOCAL-00001" summary="initial commit">
       <option name="closed" value="true" />
@@ -135,7 +139,15 @@
       <option name="project" value="LOCAL" />
       <updated>1700865333487</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="sass/css implementing and minor controller code changes">
+      <option name="closed" value="true" />
+      <created>1700946618046</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1700946618046</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -157,7 +169,8 @@
     <MESSAGE value="Figured out the basics and imported SceneBuilder. + the creation of the FXML template" />
     <MESSAGE value="maze class intepretation" />
     <MESSAGE value="creation the base functionality of the AStarAlgorithm" />
-    <option name="LAST_COMMIT_MESSAGE" value="creation the base functionality of the AStarAlgorithm" />
+    <MESSAGE value="sass/css implementing and minor controller code changes" />
+    <option name="LAST_COMMIT_MESSAGE" value="sass/css implementing and minor controller code changes" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

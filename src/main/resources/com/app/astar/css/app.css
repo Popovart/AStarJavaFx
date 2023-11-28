@@ -7,7 +7,13 @@ Button:hover {
   -fx-background-color: #9a112e;
 }
 
+TextField {
+  -fx-background-color: white !important;
+  -fx-text-fill: crimson;
+  -fx-border-color: crimson;
+  -fx-border-radius: 4px;
+}
+
 .grid-pane {
-  -fx-border-color: #346dc2;
   -fx-border-width: 2px;
 }

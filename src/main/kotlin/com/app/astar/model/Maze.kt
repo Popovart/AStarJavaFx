@@ -1,20 +1,16 @@
 package com.app.astar.model
 
+import javafx.scene.layout.GridPane
+import javafx.scene.layout.Pane
+import javafx.scene.paint.Color
 import java.io.File
 import java.lang.Exception
 import java.lang.RuntimeException
 
-enum class Signs(val char: Char) {
-    WALL('#'),
-    UNVISITED('.'),
-    EXIT('E'),
-    START('S'),
-    PATH('*');
 
-    override fun toString() = char.toString();
-}
 class Maze private constructor() {
-    private var mazeList: MutableList<MutableList<Signs>> = mutableListOf()
+    var mazeList: MutableList<MutableList<Signs>> = mutableListOf()
+        private set
     var goalPos: Point = Point(-1, -1)
         private set
     var startPos: Point = Point(-1, -1)
@@ -25,7 +21,7 @@ class Maze private constructor() {
         private set
     companion object {
         fun fromFile(pathToFile: String) : Maze {
-            val maze = Maze()
+            val maze = Maze() // using the private constructor
             try {
                 val lines = File(pathToFile).readLines()
                 maze.rowCount = lines.size
@@ -59,6 +55,7 @@ class Maze private constructor() {
             }
             return maze
         }
+
         fun copyOf(other: Maze): Maze {
             val newMaze = Maze()
             newMaze.goalPos = other.goalPos
@@ -69,6 +66,40 @@ class Maze private constructor() {
             return newMaze
         }
     }
+
+    constructor(grid: GridPane) : this() {
+        initMazeListFromGrid(grid)
+
+    }
+
+
+    private fun initMazeListFromGrid(grid: GridPane) {
+        colCount = grid.columnCount
+        rowCount = grid.rowCount
+        mazeList = MutableList(rowCount) { MutableList(colCount) { Signs.UNVISITED } } // Инициализация матрицы значением по умолчанию
+        for (node in grid.children) {
+            if (node is Pane) {
+                val colIndex = GridPane.getColumnIndex(node) ?: 0
+                val rowIndex = GridPane.getRowIndex(node) ?: 0
+
+                // Проверяем цвет фона Pane и обновляем matrix
+                val backgroundColor = node.background?.fills?.firstOrNull()?.fill
+                val sign = when (backgroundColor) {
+                    ColorSigns.WALL as Color -> Signs.WALL
+                    ColorSigns.UNVISITED as Color -> Signs.UNVISITED
+                    ColorSigns.EXIT as Color -> Signs.EXIT
+                    ColorSigns.START as Color -> Signs.START
+                    ColorSigns.PATH as Color -> Signs.PATH
+                    else -> Signs.UNVISITED
+                }
+                mazeList[rowIndex][colIndex] = sign
+            }
+        }
+
+    }
+
+
+
 
     fun outOfRange(index: Point) : Boolean {
         return index.col < 0 || index.col >= rowCount || index.row < 0 || index.row >= colCount

@@ -6,6 +6,7 @@ module com.app.astar {
     requires org.controlsfx.controls;
     requires com.dlsc.formsfx;
     requires net.synedra.validatorfx;
+    requires java.desktop;
 
     opens com.app.astar.controller to javafx.fxml;
 

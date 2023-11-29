@@ -1,5 +1,6 @@
 package com.app.astar.controller
 
+import com.app.astar.model.AStarAlgorithm
 import javafx.fxml.FXML
 import javafx.scene.control.Button
 import javafx.scene.control.Label
@@ -21,17 +22,21 @@ import kotlin.system.exitProcess
 
 class MazeController {
 
+    private lateinit var gridController: GridController
+    private lateinit var aStar: AStarAlgorithm
+
     @FXML
     private lateinit var gridContainer: VBox
 
-    @FXML
-    private lateinit var grid: GridPane
 
     @FXML
     private lateinit var fileButton: Button
 
     @FXML
     private lateinit var startButton: Button
+
+    @FXML
+    private lateinit var clearPathButton: Button
 
     @FXML
     private lateinit var byStepsButton: Button
@@ -45,6 +50,7 @@ class MazeController {
     @FXML
     private lateinit var initMazeButton: Button
 
+    private lateinit var maze: Maze
 
     @FXML
     private var label: Label? = null
@@ -61,11 +67,14 @@ class MazeController {
         path = selectedFile.absolutePath
 
         if (path.isNotEmpty()){
+
+            clearGridContainer()
+
             startButton.isDisable = false
             byStepsButton.isDisable = false
 
             val maze = Maze.fromFile(path)
-            val gridController = GridController(maze)
+            gridController = GridController(maze)
             // Добавляем GridPane в пользовательский интерфейс
             gridContainer.children.add(gridController.getGrid())
         }
@@ -74,19 +83,44 @@ class MazeController {
 
     @FXML
     private fun onStartButtonClick() {
-        if (path.isNotEmpty()){
-
+        ///TODO надо проверить почему не добавляется goalPos
+        maze = Maze(gridController.getGrid())
+        if (IsStartOrGoalDefined()){
+            return
         }
+        aStar = AStarAlgorithm(maze)
+        val solvedMaze = aStar.getSolvedMaze()
+        clearPathButton.isDisable = false
+
+
+
+        gridController = GridController(solvedMaze)
+
+        clearGridContainer()
+        gridContainer.children.add(gridController.getGrid())
     }
 
     @FXML
-    fun initialize() {
-        if (::gridContainer.isInitialized) {
-            println("gridContainer is initialized")
-        } else {
-            println("gridContainer is not initialized")
+    private fun onClearPathButtonClick() {
+        ///TODO
+    }
+
+    private fun IsStartOrGoalDefined() : Boolean{
+        if (!maze.isStartPosDefined() || !maze.isGoalPosDefined()){
+            label?.text = "Maze doesn't have start or goal position! Goal position = ${maze.goalPos}. Start position = ${maze.startPos}"
+            return false
+        }
+
+        label?.text = ""
+        return true
+    }
+
+    private fun clearGridContainer() {
+        if(gridContainer.children.isNotEmpty()){
+            gridContainer.children.clear()
         }
     }
+
     @FXML
     private fun onCreateMazeButtonClick() {
         val fxmlLoader = FXMLLoader(javaClass.getResource("/com/app/astar/modalWindow-view.fxml"))
@@ -120,7 +154,9 @@ class MazeController {
         if (::gridContainer.isInitialized) {
             val rows = rowsInput.text.toInt()
             val cols = colsInput.text.toInt()
-            val gridController = GridController(rows, cols)
+            gridController = GridController(rows, cols)
+
+            clearGridContainer()
 
             // Добавляем GridPane в пользовательский интерфейс
             gridContainer.children.add(gridController.getGrid())

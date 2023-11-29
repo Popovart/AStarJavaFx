@@ -23,10 +23,12 @@ class App : Application() {
         @JvmStatic
         fun main(args: Array<String>) {
             launch(App::class.java)
-            //val maze = Maze.fromFile("/Users/dmitrypopov/IdeaProjects/AStar/src/main/resources/maze.txt")
-            //maze.print()
-            //val aStar = AStarAlgorithm(maze)
-            //aStar.printSolvedMaze()
+//            val maze = Maze.fromFile("/Users/dmitrypopov/IdeaProjects/AStar/src/main/resources/maze2.txt")
+//            maze.print()
+//            println("maze cols = ${maze.colCount}")
+//            println("maze cols = ${maze.rowCount}")
+//            val aStar = AStarAlgorithm(maze)
+//            aStar.printSolvedMaze()
 
         }
     }

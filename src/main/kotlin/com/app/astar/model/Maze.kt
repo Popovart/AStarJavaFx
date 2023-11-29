@@ -85,12 +85,18 @@ class Maze private constructor() {
                 // Проверяем цвет фона Pane и обновляем matrix
                 val backgroundColor = node.background?.fills?.firstOrNull()?.fill
                 val sign = when (backgroundColor) {
-                    ColorSigns.WALL as Color -> Signs.WALL
-                    ColorSigns.UNVISITED as Color -> Signs.UNVISITED
-                    ColorSigns.EXIT as Color -> Signs.EXIT
-                    ColorSigns.START as Color -> Signs.START
-                    ColorSigns.PATH as Color -> Signs.PATH
-                    else -> Signs.UNVISITED
+                    ColorSigns.WALL.color  -> Signs.WALL
+                    ColorSigns.UNVISITED.color -> Signs.UNVISITED
+                    ColorSigns.EXIT.color -> {
+                        goalPos = Point(rowIndex, colIndex)
+                        Signs.EXIT
+                    }
+                    ColorSigns.START.color -> {
+                        startPos = Point(rowIndex, colIndex)
+                        Signs.START
+                    }
+                    ColorSigns.PATH.color -> Signs.PATH
+                    else -> throw RuntimeException("Unknown color in the maze: $backgroundColor")
                 }
                 mazeList[rowIndex][colIndex] = sign
             }
@@ -98,6 +104,13 @@ class Maze private constructor() {
 
     }
 
+    fun isGoalPosDefined() : Boolean {
+        return goalPos != Point(-1,-1)
+    }
+
+    fun isStartPosDefined() : Boolean {
+        return startPos != Point(-1,-1)
+    }
 
 
 
@@ -151,6 +164,42 @@ class Maze private constructor() {
             println();
         }
         println()
+    }
+
+    fun getSolvedMaze(path: MutableList<Point>): Maze {
+        val tempMaze = copyOf(this)
+        for (point in path){
+            if (point != startPos && point != goalPos){
+                tempMaze[point] = Signs.PATH
+            }
+        }
+        return tempMaze
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is Maze) return false
+
+        if(this.colCount != other.colCount){
+            println("this $colCount !=  other $colCount")
+            return false
+        }
+        if(this.rowCount != other.rowCount){
+            println("this $rowCount != other $rowCount")
+            return false
+        }
+        for (col in 0 until this.colCount){
+            for (row in 0 until this.rowCount) {
+                if (this.mazeList[col][row] != other.mazeList[col][row]) {
+                    println("${this.mazeList[col][row]} != ${other.mazeList[col][row]}")
+                    return false
+                }
+
+            }
+        }
+
+        return true
+
     }
 
 }

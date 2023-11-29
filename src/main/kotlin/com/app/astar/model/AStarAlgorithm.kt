@@ -56,6 +56,10 @@ class AStarAlgorithm (
 
 
     init {
+
+        println("maze.startPos ${maze.startPos}, maze.goalPos ${maze.goalPos}, maze.cols ${maze.colCount}, maze.rows ${maze.rowCount}")
+
+
         openSet.add(maze.startPos)
 
         //start position init
@@ -202,6 +206,10 @@ class AStarAlgorithm (
 
     fun printSolvedMaze(){
         maze.printSolved(path)
+    }
+
+    fun getSolvedMaze() : Maze {
+        return maze.getSolvedMaze(path)
     }
 
     fun printMazeBySteps(){

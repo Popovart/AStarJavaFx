@@ -52,7 +52,8 @@ class AStarAlgorithm (
     private var openSet: LinkedHashSet<Point> = LinkedHashSet<Point>()
     private var closedSet: LinkedHashSet<Point> = LinkedHashSet<Point>()
     private var path: MutableList<Point> = mutableListOf()
-
+    var message: String = ""
+        private set
 
 
     init {
@@ -73,13 +74,13 @@ class AStarAlgorithm (
 
         val timeTakenSeconds = timeTakenMillis / 1000.0
         println("Time taken by function findPath: $timeTakenSeconds seconds")
+        if (message.isEmpty()){
+            message = "Time taken by function findPath: $timeTakenSeconds seconds"
+        }
     }
 
-    private fun noPathInfo(){
-        println("It's impossible to find the goal position. Walls nearby")
-    }
-    private fun pathFoundInfo(){
-        println("Goal position has been achieved")
+    private fun getNoPathInfo() : String{
+        return "It's impossible to find the goal position. Walls nearby"
     }
 
     private fun findPath(){
@@ -128,7 +129,7 @@ class AStarAlgorithm (
 
         }
         if(noPath){
-            noPathInfo()
+            message = getNoPathInfo()
         }
 
     }

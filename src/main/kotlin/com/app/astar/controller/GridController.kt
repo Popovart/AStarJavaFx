@@ -3,13 +3,14 @@ package com.app.astar.controller
 import com.app.astar.model.Signs
 import com.app.astar.model.ColorSigns
 import com.app.astar.model.Maze
+import javafx.geometry.Insets
 import javafx.scene.input.MouseButton
 import javafx.scene.paint.Color
 import javafx.scene.layout.*
 
 class GridController (private var rows: Int = 0, private var cols: Int = 0) {
 
-    private val grid = GridPane()
+    val grid = GridPane()
 
     init {
         initializeGrid()
@@ -33,6 +34,22 @@ class GridController (private var rows: Int = 0, private var cols: Int = 0) {
             Signs.WALL -> ColorSigns.WALL.color
             Signs.START -> ColorSigns.START.color
             Signs.PATH -> ColorSigns.PATH.color
+        }
+    }
+
+    fun clearPath(){
+        for (node in grid.children){
+            if (node is Pane) {
+                val backgroundColor = node.background?.fills?.firstOrNull()?.fill
+                if (backgroundColor == ColorSigns.PATH.color){
+                    // Создаем новый объект BackgroundFill с новым цветом
+                    val newBackgroundFill = BackgroundFill(ColorSigns.UNVISITED.color, CornerRadii.EMPTY, Insets.EMPTY)
+                    // Создаем новый объект Background с новым BackgroundFill
+                    val newBackground = Background(newBackgroundFill)
+                    // Устанавливаем новый фон для Pane
+                    node.background = newBackground
+                }
+            }
         }
     }
 
@@ -60,7 +77,6 @@ class GridController (private var rows: Int = 0, private var cols: Int = 0) {
     }
 
     private fun initializeGrid() {
-
         for (row in 0 until rows) {
             for (col in 0 until cols) {
                 val pane = createPane(Color.WHITE)
@@ -68,10 +84,6 @@ class GridController (private var rows: Int = 0, private var cols: Int = 0) {
             }
         }
 
-    }
-
-    fun getGrid(): GridPane {
-        return grid
     }
 
 

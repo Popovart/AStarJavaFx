@@ -76,38 +76,37 @@ class MazeController {
             val maze = Maze.fromFile(path)
             gridController = GridController(maze)
             // Добавляем GridPane в пользовательский интерфейс
-            gridContainer.children.add(gridController.getGrid())
+            gridContainer.children.add(gridController.grid)
         }
 
     }
 
     @FXML
     private fun onStartButtonClick() {
-        ///TODO надо проверить почему не добавляется goalPos
-        maze = Maze(gridController.getGrid())
-        if (IsStartOrGoalDefined()){
+        gridController.clearPath()
+        maze = Maze(gridController.grid)
+
+        if (!isStartOrGoalDefined()){
+            label?.text = "Maze doesn't have start or goal position! Goal position = ${maze.goalPos}. Start position = ${maze.startPos}"
             return
         }
+
         aStar = AStarAlgorithm(maze)
+        label?.text = aStar.message
         val solvedMaze = aStar.getSolvedMaze()
-        clearPathButton.isDisable = false
+
 
 
 
         gridController = GridController(solvedMaze)
 
         clearGridContainer()
-        gridContainer.children.add(gridController.getGrid())
+
+        gridContainer.children.add(gridController.grid)
     }
 
-    @FXML
-    private fun onClearPathButtonClick() {
-        ///TODO
-    }
-
-    private fun IsStartOrGoalDefined() : Boolean{
+    private fun isStartOrGoalDefined() : Boolean{
         if (!maze.isStartPosDefined() || !maze.isGoalPosDefined()){
-            label?.text = "Maze doesn't have start or goal position! Goal position = ${maze.goalPos}. Start position = ${maze.startPos}"
             return false
         }
 
@@ -120,6 +119,9 @@ class MazeController {
             gridContainer.children.clear()
         }
     }
+
+
+
 
     @FXML
     private fun onCreateMazeButtonClick() {
@@ -158,8 +160,9 @@ class MazeController {
 
             clearGridContainer()
 
+
             // Добавляем GridPane в пользовательский интерфейс
-            gridContainer.children.add(gridController.getGrid())
+            gridContainer.children.add(gridController.grid)
 
             startButton.isDisable = false
             byStepsButton.isDisable = false

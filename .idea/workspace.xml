@@ -4,14 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1508b47e-872a-4315-9c81-76d6a2f0b2c3" name="Changes" comment="- grid interpretation and visualization&#10;- creating modal window &#10;- enabling feature of creating custom maze&#10;- minor style changings">
-      <change afterPath="$PROJECT_DIR$/src/main/resources/maze2.txt" afterDir="false" />
+    <list default="true" id="1508b47e-872a-4315-9c81-76d6a2f0b2c3" name="Changes" comment="- minor changes with errors">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/app/astar/App.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/app/astar/App.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/app/astar/controller/GridController.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/app/astar/controller/GridController.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/app/astar/controller/MazeController.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/app/astar/controller/MazeController.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/app/astar/model/AStarAlgorithm.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/app/astar/model/AStarAlgorithm.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/app/astar/model/Maze.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/app/astar/model/Maze.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/app/astar/maze-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/app/astar/maze-view.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -102,7 +99,7 @@
       <workItem from="1700941009251" duration="5598000" />
       <workItem from="1701169234669" duration="21495000" />
       <workItem from="1701204776963" duration="5450000" />
-      <workItem from="1701282873587" duration="9648000" />
+      <workItem from="1701282873587" duration="16524000" />
     </task>
     <task id="LOCAL-00001" summary="initial commit">
       <option name="closed" value="true" />
@@ -152,7 +149,15 @@
       <option name="project" value="LOCAL" />
       <updated>1701211077372</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="- minor changes with errors">
+      <option name="closed" value="true" />
+      <created>1701292805405</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1701292805405</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -176,7 +181,8 @@
     <MESSAGE value="creation the base functionality of the AStarAlgorithm" />
     <MESSAGE value="sass/css implementing and minor controller code changes" />
     <MESSAGE value="- grid interpretation and visualization&#10;- creating modal window &#10;- enabling feature of creating custom maze&#10;- minor style changings" />
-    <option name="LAST_COMMIT_MESSAGE" value="- grid interpretation and visualization&#10;- creating modal window &#10;- enabling feature of creating custom maze&#10;- minor style changings" />
+    <MESSAGE value="- minor changes with errors" />
+    <option name="LAST_COMMIT_MESSAGE" value="- minor changes with errors" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

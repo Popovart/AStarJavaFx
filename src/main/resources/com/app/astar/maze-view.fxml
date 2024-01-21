@@ -22,9 +22,7 @@
          <Region maxWidth="20.0" minWidth="20.0" />
          <Button fx:id="byStepsButton" disable="true" mnemonicParsing="false" text="By steps mod" />
          <Region maxWidth="20.0" minWidth="20.0" />
-         <Button fx:id="clearPathButton" mnemonicParsing="false" disable="true" text="Clear the path" />
-         <Region maxWidth="20.0" minWidth="20.0" />
-         <Button fx:id="clearAllButton" mnemonicParsing="false" disable="true" text="Clear all" />
+         <Button fx:id="clearAllButton" mnemonicParsing="false" disable="true" onMouseClicked="#onClearAllButtonClick" text="Clear all" />
       </children>
    </HBox>
    <Label fx:id="label" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308">

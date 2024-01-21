@@ -36,9 +36,6 @@ class MazeController {
     private lateinit var startButton: Button
 
     @FXML
-    private lateinit var clearPathButton: Button
-
-    @FXML
     private lateinit var byStepsButton: Button
 
     @FXML
@@ -46,6 +43,9 @@ class MazeController {
 
     @FXML
     private lateinit var colsInput: TextField
+
+    @FXML
+    private lateinit var clearAllButton: Button
 
     @FXML
     private lateinit var initMazeButton: Button
@@ -72,12 +72,15 @@ class MazeController {
 
             startButton.isDisable = false
             byStepsButton.isDisable = false
+            clearAllButton.isDisable = false
 
             val maze = Maze.fromFile(path)
             gridController = GridController(maze)
             // Добавляем GridPane в пользовательский интерфейс
             gridContainer.children.add(gridController.grid)
         }
+
+
 
     }
 
@@ -96,13 +99,19 @@ class MazeController {
         val solvedMaze = aStar.getSolvedMaze()
 
 
-
-
         gridController = GridController(solvedMaze)
+
 
         clearGridContainer()
 
         gridContainer.children.add(gridController.grid)
+    }
+
+    @FXML
+    private fun onClearAllButtonClick(){
+        if(::gridContainer.isInitialized){
+            gridController.clearAll()
+        }
     }
 
     private fun isStartOrGoalDefined() : Boolean{
@@ -140,6 +149,8 @@ class MazeController {
 
         // Показываем модальное окно и ждем, пока оно не закроется
         modalStage.showAndWait()
+
+        clearAllButton.isDisable = false
     }
 
 
@@ -171,6 +182,8 @@ class MazeController {
             println("gridContainer has not been initialized")
         }
     }
+
+
 
 
 

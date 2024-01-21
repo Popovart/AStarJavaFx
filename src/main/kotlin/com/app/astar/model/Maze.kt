@@ -76,6 +76,7 @@ class Maze private constructor() {
     private fun initMazeListFromGrid(grid: GridPane) {
         colCount = grid.columnCount
         rowCount = grid.rowCount
+
         mazeList = MutableList(rowCount) { MutableList(colCount) { Signs.UNVISITED } } // Инициализация матрицы значением по умолчанию
         for (node in grid.children) {
             if (node is Pane) {

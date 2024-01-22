@@ -4,12 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1508b47e-872a-4315-9c81-76d6a2f0b2c3" name="Changes" comment="- minor changes with errors">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="1508b47e-872a-4315-9c81-76d6a2f0b2c3" name="Changes" comment="Bug fixes:&#10;- path, start and end points didn't refresh&#10;- changing the color didn't work properly&#10;- the start algo button caused the first bug with refreshing colors&#10;&#10;Features:&#10;- Enabling clearAllButton functionality">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/app/astar/controller/GridController.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/app/astar/controller/GridController.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/app/astar/controller/MazeController.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/app/astar/controller/MazeController.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/app/astar/model/AStarAlgorithm.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/app/astar/model/AStarAlgorithm.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/app/astar/model/Maze.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/app/astar/model/Maze.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/app/astar/model/Signs.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/app/astar/model/Signs.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/com/app/astar/maze-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/app/astar/maze-view.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -113,7 +114,8 @@
       <workItem from="1701282873587" duration="16524000" />
       <workItem from="1705617138572" duration="1072000" />
       <workItem from="1705764559620" duration="10462000" />
-      <workItem from="1705836246733" duration="4329000" />
+      <workItem from="1705836246733" duration="4469000" />
+      <workItem from="1705931473823" duration="7491000" />
     </task>
     <task id="LOCAL-00001" summary="initial commit">
       <option name="closed" value="true" />
@@ -171,7 +173,15 @@
       <option name="project" value="LOCAL" />
       <updated>1701292805405</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Bug fixes:&#10;- path, start and end points didn't refresh&#10;- changing the color didn't work properly&#10;- the start algo button caused the first bug with refreshing colors&#10;&#10;Features:&#10;- Enabling clearAllButton functionality">
+      <option name="closed" value="true" />
+      <created>1705875106609</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1705875106609</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -196,7 +206,8 @@
     <MESSAGE value="sass/css implementing and minor controller code changes" />
     <MESSAGE value="- grid interpretation and visualization&#10;- creating modal window &#10;- enabling feature of creating custom maze&#10;- minor style changings" />
     <MESSAGE value="- minor changes with errors" />
-    <option name="LAST_COMMIT_MESSAGE" value="- minor changes with errors" />
+    <MESSAGE value="Bug fixes:&#10;- path, start and end points didn't refresh&#10;- changing the color didn't work properly&#10;- the start algo button caused the first bug with refreshing colors&#10;&#10;Features:&#10;- Enabling clearAllButton functionality" />
+    <option name="LAST_COMMIT_MESSAGE" value="Bug fixes:&#10;- path, start and end points didn't refresh&#10;- changing the color didn't work properly&#10;- the start algo button caused the first bug with refreshing colors&#10;&#10;Features:&#10;- Enabling clearAllButton functionality" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

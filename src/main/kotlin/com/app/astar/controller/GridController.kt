@@ -43,6 +43,7 @@ class GridController (private var rows: Int = 0, private var cols: Int = 0) {
             Signs.WALL -> ColorSigns.WALL.color
             Signs.START -> ColorSigns.START.color
             Signs.PATH -> ColorSigns.PATH.color
+            Signs.PROBABLE -> ColorSigns.PROBABLE.color
         }
     }
 

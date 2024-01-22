@@ -20,7 +20,7 @@
          <Region maxWidth="20.0" minWidth="20.0" />
          <Button fx:id="startButton" disable="true" minWidth="20.0" mnemonicParsing="false" onMouseClicked="#onStartButtonClick" text="Start Algorithm" />
          <Region maxWidth="20.0" minWidth="20.0" />
-         <Button fx:id="byStepsButton" disable="true" mnemonicParsing="false" text="By steps mod" />
+         <Button fx:id="byStepsButton" disable="true" mnemonicParsing="false" onMouseClicked="#onByStepsButtonClick" text="By steps mod" />
          <Region maxWidth="20.0" minWidth="20.0" />
          <Button fx:id="clearAllButton" mnemonicParsing="false" disable="true" onMouseClicked="#onClearAllButtonClick" text="Clear all" />
       </children>

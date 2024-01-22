@@ -1,11 +1,18 @@
 package com.app.astar.model
 
+import com.app.astar.controller.GridController
+import javafx.animation.PauseTransition
+import javafx.application.Platform
+import javafx.scene.layout.Background
+import javafx.scene.layout.BackgroundFill
 import javafx.scene.layout.GridPane
 import javafx.scene.layout.Pane
 import javafx.scene.paint.Color
+import javafx.util.Duration
 import java.io.File
 import java.lang.Exception
 import java.lang.RuntimeException
+import kotlin.concurrent.thread
 
 
 class Maze private constructor() {
@@ -147,6 +154,50 @@ class Maze private constructor() {
         }
     }
 
+    fun printBySteps(path: LinkedHashSet<Point>) {
+        val tempMaze = copyOf(this)
+        for (point in path){
+            if (point != startPos && point != goalPos){
+                tempMaze[point] = Signs.PATH
+            }
+            tempMaze.print()
+        }
+    }
+
+    ///TODO I must to make those 2 functions easier and kinda change their names
+    fun updateGridByStepsWithProbPos(gridController: GridController, probPath: Collection<Point>, path: Collection<Point>) {
+        updateGridBySteps(gridController, probPath.iterator(), ColorSigns.PROBABLE.color, 100.0) {
+            // После завершения первой анимации начинаем вторую
+            updateGridBySteps(gridController, path.iterator(), ColorSigns.PATH.color, 50.0)
+        }
+    }
+
+    private fun updateGridBySteps(gridController: GridController, pointsIterator: Iterator<Point>, color: Color, delay: Double, onFinish: () -> Unit = {}) {
+        // Функция для обновления следующей точки
+        fun updateNextPoint() {
+            if (pointsIterator.hasNext()) {
+                val point = pointsIterator.next()
+                Platform.runLater {
+                    gridController.grid.children.forEach { node ->
+                        if (node is Pane && GridPane.getColumnIndex(node) == point.row && GridPane.getRowIndex(node) == point.col && node != gridController.startPane && node != gridController.endPane) {
+                            node.background = Background(BackgroundFill(color, null, null))
+                        }
+                    }
+                }
+
+                // Задаем задержку перед следующим обновлением
+                PauseTransition(Duration.millis(delay)).apply {
+                    setOnFinished { updateNextPoint() } // Продолжаем с следующей точки после задержки
+                    play()
+                }
+            } else {
+                onFinish() // Вызываем onFinish, если все точки обработаны
+            }
+        }
+
+        updateNextPoint() // Начинаем с первой точки
+    }
+
     fun printSolved(path: MutableList<Point>){
         val tempMaze = copyOf(this)
         for (point in path){
@@ -202,6 +253,8 @@ class Maze private constructor() {
         return true
 
     }
+
+
 
 }
 

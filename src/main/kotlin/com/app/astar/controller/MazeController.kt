@@ -4,12 +4,9 @@ import com.app.astar.model.AStarAlgorithm
 import javafx.fxml.FXML
 import javafx.scene.control.Button
 import javafx.scene.control.Label
-import javafx.scene.layout.GridPane
-import org.controlsfx.control.spreadsheet.Grid
 import javafx.stage.FileChooser
 import javafx.stage.Stage
 import com.app.astar.model.Maze
-import javafx.application.Platform
 import javafx.event.ActionEvent
 import javafx.fxml.FXMLLoader
 import javafx.scene.Node
@@ -18,7 +15,6 @@ import javafx.scene.Scene
 import javafx.scene.control.TextField
 import javafx.scene.layout.VBox
 import javafx.stage.Modality
-import kotlin.system.exitProcess
 
 class MazeController {
 
@@ -107,12 +103,36 @@ class MazeController {
         gridContainer.children.add(gridController.grid)
     }
 
+    ///TODO here there is a minor repeating of the code
+    @FXML
+    private fun onByStepsButtonClick(){
+        gridController.clearPath()
+        maze = Maze(gridController.grid)
+
+        if (!isStartOrGoalDefined()){
+            label?.text = "Maze doesn't have start or goal position! Goal position = ${maze.goalPos}. Start position = ${maze.startPos}"
+            return
+        }
+
+        aStar = AStarAlgorithm(maze)
+        //label?.text = aStar.message
+
+        if(::aStar.isInitialized){
+            aStar.updateGridByStepsWithProbPos(gridController)
+            byStepsButton.isDisable = true
+            startButton.isDisable = true
+        }
+
+    }
+
     @FXML
     private fun onClearAllButtonClick(){
         if(::gridContainer.isInitialized){
             gridController.clearAll()
         }
     }
+
+
 
     private fun isStartOrGoalDefined() : Boolean{
         if (!maze.isStartPosDefined() || !maze.isGoalPosDefined()){
@@ -154,6 +174,8 @@ class MazeController {
     }
 
 
+
+
     @FXML
     fun onInitMazeButtonClick(actionEvent: ActionEvent) {
         // Получаем источник события, который является элементом управления, вызвавшим событие
@@ -182,6 +204,8 @@ class MazeController {
             println("gridContainer has not been initialized")
         }
     }
+
+
 
 
 

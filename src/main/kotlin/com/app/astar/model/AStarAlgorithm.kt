@@ -1,5 +1,6 @@
 package com.app.astar.model
 
+import com.app.astar.controller.GridController
 import java.util.*
 import kotlin.system.measureTimeMillis
 
@@ -215,6 +216,14 @@ class AStarAlgorithm (
 
     fun printMazeBySteps(){
         maze.printBySteps(path)
+    }
+
+    fun printByStepsWithProbPos(){
+        maze.printBySteps(closedSet)
+    }
+
+    fun updateGridByStepsWithProbPos(gridController: GridController){
+        maze.updateGridByStepsWithProbPos(gridController, closedSet, path)
     }
 
 

@@ -8,7 +8,8 @@ enum class Signs(val char: Char) {
     UNVISITED('.'),
     EXIT('E'),
     START('S'),
-    PATH('*');
+    PATH('*'),
+    PROBABLE('?');
 
     override fun toString() = char.toString();
 }
@@ -18,6 +19,7 @@ enum class ColorSigns(val color: Color) {
     UNVISITED(Color.rgb(255,255,255)),
     EXIT(Color.rgb(255, 87, 51)),
     START(Color.rgb(218, 247, 166)),
-    PATH(Color.rgb(0,255,255));
+    PATH(Color.rgb(0,255,255)),
+    PROBABLE(Color.rgb(255,255,0));
 }
 

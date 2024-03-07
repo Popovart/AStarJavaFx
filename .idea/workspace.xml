@@ -99,7 +99,8 @@
       <workItem from="1700941009251" duration="5598000" />
       <workItem from="1701169234669" duration="21495000" />
       <workItem from="1701204776963" duration="5450000" />
-      <workItem from="1701282873587" duration="16524000" />
+      <workItem from="1701282873587" duration="17117000" />
+      <workItem from="1709804405220" duration="798000" />
     </task>
     <task id="LOCAL-00001" summary="initial commit">
       <option name="closed" value="true" />
@@ -157,7 +158,15 @@
       <option name="project" value="LOCAL" />
       <updated>1701292805405</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="- fixing bugs&#10;- clearing the path before starting the algorithm">
+      <option name="closed" value="true" />
+      <created>1701348688767</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1701348688767</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -182,7 +191,8 @@
     <MESSAGE value="sass/css implementing and minor controller code changes" />
     <MESSAGE value="- grid interpretation and visualization&#10;- creating modal window &#10;- enabling feature of creating custom maze&#10;- minor style changings" />
     <MESSAGE value="- minor changes with errors" />
-    <option name="LAST_COMMIT_MESSAGE" value="- minor changes with errors" />
+    <MESSAGE value="- fixing bugs&#10;- clearing the path before starting the algorithm" />
+    <option name="LAST_COMMIT_MESSAGE" value="- fixing bugs&#10;- clearing the path before starting the algorithm" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />

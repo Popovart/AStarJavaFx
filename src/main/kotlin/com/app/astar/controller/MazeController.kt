@@ -129,6 +129,9 @@ class MazeController {
     private fun onClearAllButtonClick(){
         if(::gridContainer.isInitialized){
             gridController.clearAll()
+
+            byStepsButton.isDisable = false
+            startButton.isDisable = false
         }
     }
 

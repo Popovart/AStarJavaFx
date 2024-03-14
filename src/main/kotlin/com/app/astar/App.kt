@@ -14,8 +14,8 @@ class App : Application() {
         val scene = Scene(fxmlLoader.load())
         stage.title = "Maze Solver"
         stage.scene = scene
-        stage.minWidth = 412.5
-        stage.minHeight = 247.0
+        stage.minWidth = 1920.0
+        stage.minHeight = 1080.0
         stage.show()
     }
 

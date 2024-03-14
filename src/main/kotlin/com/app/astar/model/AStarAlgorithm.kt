@@ -1,6 +1,7 @@
 package com.app.astar.model
 
 import com.app.astar.controller.GridController
+import java.math.BigInteger
 import java.util.*
 import kotlin.system.measureTimeMillis
 
@@ -49,7 +50,7 @@ class AStarAlgorithm (
     private var node: AStarNode = AStarNode()
     private var priceMatrix: MutableList<MutableList<AStarNode>> = List(maze.rowCount) { MutableList(maze.colCount) { AStarNode() } }.toMutableList()
     private val diagonalStepPenalty = 14
-    private val straightStepPenalty = 14
+    private val straightStepPenalty = 10
     private var openSet: LinkedHashSet<Point> = LinkedHashSet<Point>()
     private var closedSet: LinkedHashSet<Point> = LinkedHashSet<Point>()
     private var path: MutableList<Point> = mutableListOf()
@@ -57,9 +58,17 @@ class AStarAlgorithm (
         private set
 
 
+    fun factorial(n: Int): BigInteger {
+        var result = BigInteger.ONE
+        for (i in 1..n) {
+            result = result.multiply(BigInteger.valueOf(i.toLong()))
+        }
+        return result
+    }
+
     init {
 
-        println("maze.startPos ${maze.startPos}, maze.goalPos ${maze.goalPos}, maze.cols ${maze.colCount}, maze.rows ${maze.rowCount}")
+//        println("maze.startPos ${maze.startPos}, maze.goalPos ${maze.goalPos}, maze.cols ${maze.colCount}, maze.rows ${maze.rowCount}")
 
 
         openSet.add(maze.startPos)
@@ -68,15 +77,21 @@ class AStarAlgorithm (
         // на данный момент это бессмысленная операция, так как там и так одни 0
         priceMatrix[maze.startPos.col][maze.goalPos.row].g = 0
 
-        val timeTakenMillis = measureTimeMillis {
-            // Ваш алгоритм или блок кода
-            findPath()
-        }
+        val startTime = System.nanoTime()
+        // Ваш алгоритм или блок кода
+        findPath()
 
-        val timeTakenSeconds = timeTakenMillis / 1000.0
-        println("Time taken by function findPath: $timeTakenSeconds seconds")
+        val endTime = System.nanoTime()
+
+
+
+        val duration = (endTime - startTime)
+        val durationInMiliseconds = duration / 1000000
+        val durationInSeconds = duration / 1000000000
+//        println("Время выполнения: $duration наносекунд")
         if (message.isEmpty()){
-            message = "Time taken by function findPath: $timeTakenSeconds seconds"
+
+            message = "Time taken by function findPath: ${durationInSeconds.toDouble()} seconds"
         }
     }
 
@@ -85,6 +100,8 @@ class AStarAlgorithm (
     }
 
     private fun findPath(){
+
+
         val startPos = maze.startPos
         val goalPos = maze.goalPos
 
@@ -143,10 +160,20 @@ class AStarAlgorithm (
             val newPos = Point(currentPos.col + direction.col, currentPos.row + direction.row)
 
             if (!isWall(newPos) && !isPositionVisited(newPos)) {
+
                 node.h = hCalc(newPos)
 
                 val stepCost = if (direction.col != 0 && direction.row != 0) diagonalStepPenalty else straightStepPenalty
                 node.g = priceMatrix[currentPos.col][currentPos.row].g + stepCost
+
+                // check the case when a new position has already been checked from another position but has not been accepted as a better way yet
+                val newPosNode = priceMatrix[newPos.col][newPos.row]
+
+                if (isPositionInOpenSet(newPos)) {
+                    if (node.g > newPosNode.g) {
+                        continue
+                    }
+                }
 
                 updatePriceMatrix(node, newPos, currentPos)
 
@@ -155,10 +182,15 @@ class AStarAlgorithm (
                 }
 
                 nextPositions.add(newPos)
+
             }
         }
 
         return nextPositions
+    }
+
+    private fun isPositionInOpenSet(pos: Point): Boolean {
+        return openSet.contains(pos)
     }
 
     private fun isWall(pos: Point) : Boolean {

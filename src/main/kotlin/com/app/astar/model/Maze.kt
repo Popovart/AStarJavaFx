@@ -164,12 +164,17 @@ class Maze private constructor() {
         }
     }
 
-    ///TODO I must to make those 2 functions easier and kinda change their names
+    private fun getDelay() : Double {
+        return if ( (colCount + rowCount) < 50) 100.0 else 50.0
+    }
+
+    /// TODO I must to make those 2 functions easier and kinda change their names
     fun updateGridByStepsWithProbPos(gridController: GridController, probPath: Collection<Point>, path: Collection<Point>) {
-        updateGridBySteps(gridController, probPath.iterator(), ColorSigns.PROBABLE.color, 100.0) {
+        updateGridBySteps(gridController, probPath.iterator(), ColorSigns.PROBABLE.color, getDelay()) {
             // После завершения первой анимации начинаем вторую
-            updateGridBySteps(gridController, path.iterator(), ColorSigns.PATH.color, 50.0)
+            updateGridBySteps(gridController, path.iterator(), ColorSigns.PATH.color, getDelay()/2)
         }
+
     }
 
     private fun updateGridBySteps(gridController: GridController, pointsIterator: Iterator<Point>, color: Color, delay: Double, onFinish: () -> Unit = {}) {

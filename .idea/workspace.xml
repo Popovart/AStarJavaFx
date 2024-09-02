@@ -4,7 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1508b47e-872a-4315-9c81-76d6a2f0b2c3" name="Changes" comment="Fixing bugs: now the alg. works properly and time taken by function shows correctly" />
+    <list default="true" id="1508b47e-872a-4315-9c81-76d6a2f0b2c3" name="Changes" comment="Bug fixes:&#10;- path, start and end points didn't refresh&#10;- changing the color didn't work properly&#10;- the start algo button caused the first bug with refreshing colors&#10;&#10;Features:&#10;- Enabling clearAllButton functionality">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/app/astar/controller/GridController.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/app/astar/controller/GridController.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/app/astar/controller/MazeController.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/app/astar/controller/MazeController.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/app/astar/model/AStarAlgorithm.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/app/astar/model/AStarAlgorithm.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/app/astar/model/Maze.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/app/astar/model/Maze.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/kotlin/com/app/astar/model/Signs.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/kotlin/com/app/astar/model/Signs.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/app/astar/maze-view.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/app/astar/maze-view.fxml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -23,14 +31,6 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="HighlightingSettingsPerFile">
-    <setting file="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-base/19.0.2/javafx-base-19.0.2-win.jar!/javafx/event/Event.class" root0="SKIP_INSPECTION" />
-    <setting file="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-fxml/19.0.2/javafx-fxml-19.0.2-win.jar!/javafx/fxml/FXMLLoader.class" root0="SKIP_INSPECTION" />
-    <setting file="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-graphics/19.0.2/javafx-graphics-19.0.2-win.jar!/javafx/scene/CssStyleHelper.class" root0="SKIP_INSPECTION" />
-    <setting file="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-graphics/19.0.2/javafx-graphics-19.0.2-win.jar!/javafx/scene/Node.class" root0="SKIP_INSPECTION" />
-    <setting file="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-graphics/19.0.2/javafx-graphics-19.0.2-win.jar!/javafx/scene/Scene.class" root0="SKIP_INSPECTION" />
-    <setting file="jar://$APPLICATION_HOME_DIR$/.jdks/openjdk-21.0.2/lib/src.zip!/java.base/java/lang/Integer.java" root0="SKIP_INSPECTION" />
-  </component>
   <component name="ProblemsViewState">
     <option name="selectedTabId" value="CurrentFile" />
   </component>
@@ -45,28 +45,28 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.Unnamed.executor": "Run",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "git-widget-placeholder": "master",
-    "kotlin-language-version-configured": "true",
-    "list.type.of.created.stylesheet": "CSS",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0",
-    "settings.editor.selected.configurable": "preferences.editor",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.Unnamed.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;list.type.of.created.stylesheet&quot;: &quot;CSS&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;watcher.settings&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/main/resources/com/app/astar/sass" />
@@ -115,15 +115,7 @@
       <workItem from="1705617138572" duration="1072000" />
       <workItem from="1705764559620" duration="10462000" />
       <workItem from="1705836246733" duration="4469000" />
-      <workItem from="1705931473823" duration="7735000" />
-      <workItem from="1706016722061" duration="2000" />
-      <workItem from="1706809432749" duration="4609000" />
-      <workItem from="1707764590381" duration="162000" />
-      <workItem from="1708455265255" duration="714000" />
-      <workItem from="1708512036951" duration="2000" />
-      <workItem from="1710430380220" duration="256000" />
-      <workItem from="1710430646270" duration="42000" />
-      <workItem from="1710430696701" duration="12332000" />
+      <workItem from="1705931473823" duration="7491000" />
     </task>
     <task id="LOCAL-00001" summary="initial commit">
       <option name="closed" value="true" />
@@ -189,31 +181,7 @@
       <option name="project" value="LOCAL" />
       <updated>1705875106609</updated>
     </task>
-    <task id="LOCAL-00009" summary="Bug fixes:&#10;- path, start and end points didn't refresh&#10;- changing the color didn't work properly&#10;- the start algo button caused the first bug with refreshing colors&#10;&#10;Features:&#10;- Enabling clearAllButton functionality">
-      <option name="closed" value="true" />
-      <created>1705940768772</created>
-      <option name="number" value="00009" />
-      <option name="presentableId" value="LOCAL-00009" />
-      <option name="project" value="LOCAL" />
-      <updated>1705940768772</updated>
-    </task>
-    <task id="LOCAL-00010" summary="Features:&#10;-byStepButton functionality implementation">
-      <option name="closed" value="true" />
-      <created>1705940807766</created>
-      <option name="number" value="00010" />
-      <option name="presentableId" value="LOCAL-00010" />
-      <option name="project" value="LOCAL" />
-      <updated>1705940807766</updated>
-    </task>
-    <task id="LOCAL-00011" summary="Fixing bugs: now the alg. works properly and time taken by function shows correctly">
-      <option name="closed" value="true" />
-      <created>1710447244359</created>
-      <option name="number" value="00011" />
-      <option name="presentableId" value="LOCAL-00011" />
-      <option name="project" value="LOCAL" />
-      <updated>1710447244359</updated>
-    </task>
-    <option name="localTasksCounter" value="12" />
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -239,18 +207,15 @@
     <MESSAGE value="- grid interpretation and visualization&#10;- creating modal window &#10;- enabling feature of creating custom maze&#10;- minor style changings" />
     <MESSAGE value="- minor changes with errors" />
     <MESSAGE value="Bug fixes:&#10;- path, start and end points didn't refresh&#10;- changing the color didn't work properly&#10;- the start algo button caused the first bug with refreshing colors&#10;&#10;Features:&#10;- Enabling clearAllButton functionality" />
-    <MESSAGE value="Features:&#10;-byStepButton functionality implementation" />
-    <MESSAGE value="Fixing bugs: now the alg. works properly and time taken by function shows correctly" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixing bugs: now the alg. works properly and time taken by function shows correctly" />
+    <option name="LAST_COMMIT_MESSAGE" value="Bug fixes:&#10;- path, start and end points didn't refresh&#10;- changing the color didn't work properly&#10;- the start algo button caused the first bug with refreshing colors&#10;&#10;Features:&#10;- Enabling clearAllButton functionality" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
-        <line-breakpoint enabled="true" type="kotlin-line">
-          <url>file://$PROJECT_DIR$/src/main/kotlin/com/app/astar/model/AStarAlgorithm.kt</url>
-          <line>171</line>
-          <option name="timeStamp" value="11" />
-        </line-breakpoint>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.lang.IllegalArgumentException" package="java.lang" />
+          <option name="timeStamp" value="1" />
+        </breakpoint>
       </breakpoints>
     </breakpoint-manager>
   </component>

@@ -156,9 +156,10 @@ class Maze private constructor() {
         mazeList[point.col][point.row] = sign
     }
 
-//    fun isWall(point: Point) : Boolean{
-//        return this[point] == Signs.WALL
-//    }
+    fun isWall(point: Point) : Boolean{
+        return this[point] == Signs.WALL
+    }
+
 
     fun printBySteps(path: Collection<Point>) {
         val tempMaze = copyOf(this)
@@ -168,6 +169,16 @@ class Maze private constructor() {
             }
         }
         tempMaze.print()
+    }
+
+    fun printBySteps(path: LinkedHashSet<Point>) {
+        val tempMaze = copyOf(this)
+        for (point in path){
+            if (point != startPos && point != goalPos){
+                tempMaze[point] = Signs.PATH
+            }
+            tempMaze.print()
+        }
     }
 
     private fun getDelay(): Double = if (colCount + rowCount < 50) 100.0 else 50.0

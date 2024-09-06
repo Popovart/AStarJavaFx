@@ -1,3 +1,4 @@
+
 package com.app.astar.controller
 
 import com.app.astar.model.AStarAlgorithm
@@ -20,41 +21,46 @@ class MazeController {
 
     private lateinit var gridController: GridController
     private lateinit var aStar: AStarAlgorithm
-
-    @FXML
-    private lateinit var gridContainer: VBox
-
-
-    @FXML
-    private lateinit var fileButton: Button
-
-    @FXML
-    private lateinit var startButton: Button
-
-    @FXML
-    private lateinit var byStepsButton: Button
-
-    @FXML
-    private lateinit var rowsInput: TextField
-
-    @FXML
-    private lateinit var colsInput: TextField
-
-    @FXML
-    private lateinit var clearAllButton: Button
-
-    @FXML
-    private lateinit var initMazeButton: Button
-
     private lateinit var maze: Maze
 
     @FXML
-    private var label: Label? = null
-
+    private lateinit var gridContainer: VBox
+    @FXML
+    private lateinit var fileButton: Button
+    @FXML
+    private lateinit var startButton: Button
+    @FXML
+    private lateinit var byStepsButton: Button
+    @FXML
+    private lateinit var rowsInput: TextField
+    @FXML
+    private lateinit var colsInput: TextField
+    @FXML
+    private lateinit var clearAllButton: Button
+    @FXML
+    private lateinit var initMazeButton: Button
     @FXML
     private lateinit var createMazeButton: Button
-
+    @FXML
+    private lateinit var modalStage: Stage
+    @FXML
+    private var label: Label? = null
     private lateinit var path: String
+
+    // Метод для настройки и инициализации GridController
+    private fun setupGridController(maze: Maze) {
+        gridController = GridController(maze)
+        gridController.onPathClearedCallback = { unlockPathButtons() }
+        clearGridContainer()
+        gridContainer.children.add(gridController.grid)
+    }
+
+    // Универсальный метод для разблокировки кнопок
+    private fun unlockPathButtons() {
+        startButton.isDisable = false
+        byStepsButton.isDisable = false
+    }
+
     @FXML
     private fun onFileButtonClick() {
         val fileChooser = FileChooser()
@@ -62,173 +68,99 @@ class MazeController {
         val selectedFile = fileChooser.showOpenDialog(fileButton.scene.window)
         path = selectedFile.absolutePath
 
-        if (path.isNotEmpty()){
-
-            clearGridContainer()
-
-            startButton.isDisable = false
-            byStepsButton.isDisable = false
+        if (path.isNotEmpty()) {
+            unlockPathButtons()
             clearAllButton.isDisable = false
-
             val maze = Maze.fromFile(path)
-            gridController = GridController(maze)
-
-            gridController.onPathClearedCallback = {
-                unlockPathButtons()
-            }
-            // Добавляем GridPane в пользовательский интерфейс
-            gridContainer.children.add(gridController.grid)
+            setupGridController(maze)
         }
-
-
-
-    }
-
-    private fun unlockPathButtons() {
-        startButton.isDisable = false
-        byStepsButton.isDisable = false
     }
 
     @FXML
     private fun onStartButtonClick() {
+        processMaze { maze ->
+            aStar = AStarAlgorithm(maze)
+            label?.text = aStar.message
+            val solvedMaze = aStar.getSolvedMaze()
+            setupGridController(solvedMaze)
+        }
+    }
+
+    @FXML
+    private fun onByStepsButtonClick() {
+        processMaze { maze ->
+            aStar = AStarAlgorithm(maze)
+            if (::aStar.isInitialized) {
+                aStar.updateGridByStepsWithProbPos(gridController)
+                startButton.isDisable = true
+                byStepsButton.isDisable = true
+            }
+        }
+    }
+
+    // Обобщенный метод для работы с лабиринтом
+    private fun processMaze(action: (Maze) -> Unit) {
         gridController.clearPath()
-
         maze = Maze(gridController.grid)
-
-        if (!isStartOrGoalDefined()){
+        if (!isStartOrGoalDefined()) {
             label?.text = "Maze doesn't have start or goal position! Goal position = ${maze.goalPos}. Start position = ${maze.startPos}"
             return
         }
+        action(maze)
+    }
 
-        aStar = AStarAlgorithm(maze)
-        label?.text = aStar.message
-        val solvedMaze = aStar.getSolvedMaze()
-
-
-        gridController = GridController(solvedMaze)
-
-        gridController.onPathClearedCallback = {
+    @FXML
+    private fun onClearAllButtonClick() {
+        if (::gridContainer.isInitialized) {
+            gridController.clearAll()
             unlockPathButtons()
         }
-
-        clearGridContainer()
-
-        gridContainer.children.add(gridController.grid)
     }
 
-    ///TODO here there is a minor repeating of the code
-    @FXML
-    private fun onByStepsButtonClick(){
-        gridController.clearPath()
-        maze = Maze(gridController.grid)
-
-        if (!isStartOrGoalDefined()){
-            label?.text = "Maze doesn't have start or goal position! Goal position = ${maze.goalPos}. Start position = ${maze.startPos}"
-            return
+    private fun isStartOrGoalDefined(): Boolean {
+        return if (!maze.isStartPosDefined() || !maze.isGoalPosDefined()) {
+            false
+        } else {
+            label?.text = ""
+            true
         }
-
-        aStar = AStarAlgorithm(maze)
-        //label?.text = aStar.message
-
-        if(::aStar.isInitialized){
-            aStar.updateGridByStepsWithProbPos(gridController)
-            byStepsButton.isDisable = true
-            startButton.isDisable = true
-        }
-
-    }
-
-    @FXML
-    private fun onClearAllButtonClick(){
-        if(::gridContainer.isInitialized){
-            gridController.clearAll()
-
-            byStepsButton.isDisable = false
-            startButton.isDisable = false
-        }
-    }
-
-
-
-    private fun isStartOrGoalDefined() : Boolean{
-        if (!maze.isStartPosDefined() || !maze.isGoalPosDefined()){
-            return false
-        }
-
-        label?.text = ""
-        return true
     }
 
     private fun clearGridContainer() {
-        if(gridContainer.children.isNotEmpty()){
+        if (gridContainer.children.isNotEmpty()) {
             gridContainer.children.clear()
         }
     }
 
-
-
-
     @FXML
     private fun onCreateMazeButtonClick() {
         val fxmlLoader = FXMLLoader(javaClass.getResource("/com/app/astar/modalWindow-view.fxml"))
-        fxmlLoader.setController(this) // Установить текущий контроллер
+        fxmlLoader.setController(this)
         val modalRoot: Parent = fxmlLoader.load()
-
-        // Создаем новую сцену для модального окна
         val modalScene = Scene(modalRoot)
-        val modalStage = Stage()
+        modalStage = Stage()
 
-        // Устанавливаем модальность и другие свойства
         modalStage.scene = modalScene
         modalStage.initModality(Modality.APPLICATION_MODAL)
         modalStage.title = "Settings window"
-
-        // Показываем модальное окно и ждем, пока оно не закроется
         modalStage.showAndWait()
 
         clearAllButton.isDisable = false
     }
 
-
-
-
     @FXML
     fun onInitMazeButtonClick(actionEvent: ActionEvent) {
-        // Получаем источник события, который является элементом управления, вызвавшим событие
-        val source = actionEvent.source as Node
-        // Получаем текущую сцену через источник события
-        val stage = source.scene.window as Stage
-        // Закрываем окно
-        stage.close()
 
+        modalStage.close()
 
-        if (::gridContainer.isInitialized) {
-            val rows = rowsInput.text.toInt()
-            val cols = colsInput.text.toInt()
-            gridController = GridController(rows, cols)
+        val rows = rowsInput.text.toInt()
+        val cols = colsInput.text.toInt()
+        gridController = GridController(rows, cols)
+        gridController.onPathClearedCallback = { unlockPathButtons() }
 
-            gridController.onPathClearedCallback = {
-                unlockPathButtons()
-            }
+        clearGridContainer()
+        gridContainer.children.add(gridController.grid)
+        unlockPathButtons()
 
-            clearGridContainer()
-
-
-            // Добавляем GridPane в пользовательский интерфейс
-            gridContainer.children.add(gridController.grid)
-
-            startButton.isDisable = false
-            byStepsButton.isDisable = false
-
-        } else {
-            println("gridContainer has not been initialized")
-        }
     }
-
-
-
-
-
-
-
 }

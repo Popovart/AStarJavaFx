@@ -52,7 +52,7 @@ class Maze private constructor() {
         }
     }
 
-    // Метод для чтения и парсинга файла
+
     private fun parseFile(lines: List<String>) {
         rowCount = lines.size
         lines.forEachIndexed { rowIndex, line ->
@@ -62,7 +62,7 @@ class Maze private constructor() {
         colCount = mazeList[0].size
     }
 
-    // Метод для парсинга строки
+
     private fun parseLine(rowIndex: Int, line: String): MutableList<Signs> {
         val row = mutableListOf<Signs>()
         line.forEach { char ->
@@ -92,7 +92,7 @@ class Maze private constructor() {
     }
 
 
-    // Логика работы с сеткой
+
     private fun initMazeListFromGrid(grid: GridPane) {
         colCount = grid.columnCount
         rowCount = grid.rowCount
@@ -109,7 +109,7 @@ class Maze private constructor() {
         }
     }
 
-    // Метод для получения знака из цвета
+
     private fun getSignFromColor(node: Pane): Signs {
         val backgroundColor = node.background?.fills?.firstOrNull()?.fill
         return when (backgroundColor) {
@@ -156,11 +156,10 @@ class Maze private constructor() {
         mazeList[point.col][point.row] = sign
     }
 
-    fun isWall(point: Point) : Boolean{
-        return this[point] == Signs.WALL
-    }
+//    fun isWall(point: Point) : Boolean{
+//        return this[point] == Signs.WALL
+//    }
 
-    // Оптимизация методов для печати шагов
     fun printBySteps(path: Collection<Point>) {
         val tempMaze = copyOf(this)
         path.forEach { point ->
@@ -169,16 +168,6 @@ class Maze private constructor() {
             }
         }
         tempMaze.print()
-    }
-
-    fun printBySteps(path: LinkedHashSet<Point>) {
-        val tempMaze = copyOf(this)
-        for (point in path){
-            if (point != startPos && point != goalPos){
-                tempMaze[point] = Signs.PATH
-            }
-            tempMaze.print()
-        }
     }
 
     private fun getDelay(): Double = if (colCount + rowCount < 50) 100.0 else 50.0

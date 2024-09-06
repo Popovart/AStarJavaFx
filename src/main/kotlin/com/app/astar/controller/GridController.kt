@@ -47,6 +47,10 @@ class GridController (private var rows: Int = 0, private var cols: Int = 0) {
         }
     }
 
+
+    /*
+    function for clearing PATH
+     */
     fun clearPath(){
         for (node in grid.children){
             if (node is Pane) {

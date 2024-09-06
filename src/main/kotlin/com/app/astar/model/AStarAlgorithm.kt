@@ -120,7 +120,7 @@ class AStarAlgorithm (
 
             val tempPositions: LinkedHashSet<Point> = getPositionsToCheck(currentPos)
 
-            // after processing the node, put it from th openSet to the closedSet
+            // after processing the node, put it from the openSet to the closedSet
             openSet.remove(currentPos)
             closedSet.add(currentPos)
 

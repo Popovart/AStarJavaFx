@@ -69,19 +69,17 @@ class AStarAlgorithm (
     init {
         openSet.add(maze.startPos)
 
-        // Инициализация начальной позиции
+        // init initial position
         priceMatrix[maze.startPos.col][maze.goalPos.row].g = 0
 
-        // Измерение времени выполнения алгоритма
         val startTime = System.nanoTime()
         findPath()
         val endTime = System.nanoTime()
 
         val durationInNanoseconds = (endTime - startTime)
-        val durationInMilliseconds = durationInNanoseconds / 1_000_000.0  // более точное измерение в миллисекундах
+        val durationInMilliseconds = durationInNanoseconds / 1_000_000.0
         val durationInSeconds = durationInNanoseconds / 1_000_000_000.0
 
-        // Если время меньше миллисекунды, выводим миллисекунды с большей точностью
         if (durationInMilliseconds < 1) {
             message = "Time taken by function findPath: $durationInMilliseconds milliseconds"
         } else {

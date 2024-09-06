@@ -27,51 +27,63 @@ class Maze private constructor() {
     var rowCount: Int = -1
         private set
     companion object {
-        fun fromFile(pathToFile: String) : Maze {
-            val maze = Maze() // using the private constructor
+        fun fromFile(pathToFile: String): Maze {
+            val maze = Maze()
             try {
-                val lines = File(pathToFile).readLines()
-                maze.rowCount = lines.size
-                lines.forEachIndexed { rowIndex, line ->
-                    val row = mutableListOf<Signs>()
-                    line.forEach { char ->
-                        when (char) {
-                            Signs.UNVISITED.char -> row.add(Signs.UNVISITED)
-                            Signs.WALL.char -> row.add(Signs.WALL)
-                            Signs.START.char -> {
-                                row.add(Signs.START)
-                                maze.startPos = Point(rowIndex, row.lastIndex)
-                            }
-                            Signs.EXIT.char -> {
-                                row.add(Signs.EXIT)
-                                maze.goalPos = Point(rowIndex, row.lastIndex)
-                            }
-                            ' ' -> {} // skip space
-                            else -> throw RuntimeException("Unknown character in the maze: $char")
-                        }
-                    }
-                    maze.mazeList.add(row)
-                }
-                maze.colCount = maze.mazeList[0].size
+                maze.parseFile(File(pathToFile).readLines())
             } catch (e: Exception) {
                 throw RuntimeException("Error reading file: $pathToFile, ${e.message}")
             }
 
-            if (maze.startPos.col == -1 || maze.goalPos.col == -1){
+            if (!maze.isGoalPosDefined() || !maze.isStartPosDefined()) {
                 throw RuntimeException("The maze doesn't have start or exit position")
             }
             return maze
         }
 
         fun copyOf(other: Maze): Maze {
-            val newMaze = Maze()
-            newMaze.goalPos = other.goalPos
-            newMaze.startPos = other.startPos
-            newMaze.colCount = other.colCount
-            newMaze.rowCount = other.rowCount
-            newMaze.mazeList = other.mazeList.map { it.toMutableList() }.toMutableList()
-            return newMaze
+            return Maze().apply {
+                goalPos = other.goalPos
+                startPos = other.startPos
+                colCount = other.colCount
+                rowCount = other.rowCount
+                mazeList = other.mazeList.map { it.toMutableList() }.toMutableList()
+            }
         }
+    }
+
+    // Метод для чтения и парсинга файла
+    private fun parseFile(lines: List<String>) {
+        rowCount = lines.size
+        lines.forEachIndexed { rowIndex, line ->
+            val row = parseLine(rowIndex, line)
+            mazeList.add(row)
+        }
+        colCount = mazeList[0].size
+    }
+
+    // Метод для парсинга строки
+    private fun parseLine(rowIndex: Int, line: String): MutableList<Signs> {
+        val row = mutableListOf<Signs>()
+        line.forEach { char ->
+            row.add(
+                when (char) {
+                    Signs.UNVISITED.char -> Signs.UNVISITED
+                    Signs.WALL.char -> Signs.WALL
+                    Signs.START.char -> {
+                        startPos = Point(rowIndex, row.size)
+                        Signs.START
+                    }
+                    Signs.EXIT.char -> {
+                        goalPos = Point(rowIndex, row.size)
+                        Signs.EXIT
+                    }
+                    ' ' -> return@forEach // skip space
+                    else -> throw RuntimeException("Unknown character in the maze: $char")
+                }
+            )
+        }
+        return row
     }
 
     constructor(grid: GridPane) : this() {
@@ -80,36 +92,40 @@ class Maze private constructor() {
     }
 
 
+    // Логика работы с сеткой
     private fun initMazeListFromGrid(grid: GridPane) {
         colCount = grid.columnCount
         rowCount = grid.rowCount
 
-        mazeList = MutableList(rowCount) { MutableList(colCount) { Signs.UNVISITED } } // Инициализация матрицы значением по умолчанию
+        mazeList = MutableList(rowCount) { MutableList(colCount) { Signs.UNVISITED } }
+
         for (node in grid.children) {
             if (node is Pane) {
                 val colIndex = GridPane.getColumnIndex(node) ?: 0
                 val rowIndex = GridPane.getRowIndex(node) ?: 0
 
-                // Проверяем цвет фона Pane и обновляем matrix
-                val backgroundColor = node.background?.fills?.firstOrNull()?.fill
-                val sign = when (backgroundColor) {
-                    ColorSigns.WALL.color  -> Signs.WALL
-                    ColorSigns.UNVISITED.color -> Signs.UNVISITED
-                    ColorSigns.EXIT.color -> {
-                        goalPos = Point(rowIndex, colIndex)
-                        Signs.EXIT
-                    }
-                    ColorSigns.START.color -> {
-                        startPos = Point(rowIndex, colIndex)
-                        Signs.START
-                    }
-                    ColorSigns.PATH.color -> Signs.PATH
-                    else -> throw RuntimeException("Unknown color in the maze: $backgroundColor")
-                }
-                mazeList[rowIndex][colIndex] = sign
+                mazeList[rowIndex][colIndex] = getSignFromColor(node)
             }
         }
+    }
 
+    // Метод для получения знака из цвета
+    private fun getSignFromColor(node: Pane): Signs {
+        val backgroundColor = node.background?.fills?.firstOrNull()?.fill
+        return when (backgroundColor) {
+            ColorSigns.WALL.color -> Signs.WALL
+            ColorSigns.UNVISITED.color -> Signs.UNVISITED
+            ColorSigns.EXIT.color -> {
+                goalPos = Point(GridPane.getRowIndex(node), GridPane.getColumnIndex(node))
+                Signs.EXIT
+            }
+            ColorSigns.START.color -> {
+                startPos = Point(GridPane.getRowIndex(node), GridPane.getColumnIndex(node))
+                Signs.START
+            }
+            ColorSigns.PATH.color -> Signs.PATH
+            else -> throw RuntimeException("Unknown color in the maze: $backgroundColor")
+        }
     }
 
     fun isGoalPosDefined() : Boolean {
@@ -144,14 +160,15 @@ class Maze private constructor() {
         return this[point] == Signs.WALL
     }
 
-    fun printBySteps(path: MutableList<Point>){
+    // Оптимизация методов для печати шагов
+    fun printBySteps(path: Collection<Point>) {
         val tempMaze = copyOf(this)
-        for (point in path){
-            if (point != startPos && point != goalPos){
+        path.forEach { point ->
+            if (point != startPos && point != goalPos) {
                 tempMaze[point] = Signs.PATH
             }
-            tempMaze.print()
         }
+        tempMaze.print()
     }
 
     fun printBySteps(path: LinkedHashSet<Point>) {
@@ -164,43 +181,51 @@ class Maze private constructor() {
         }
     }
 
-    private fun getDelay() : Double {
-        return if ( (colCount + rowCount) < 50) 100.0 else 50.0
-    }
+    private fun getDelay(): Double = if (colCount + rowCount < 50) 100.0 else 50.0
 
-    /// TODO I must to make those 2 functions easier and kinda change their names
-    fun updateGridByStepsWithProbPos(gridController: GridController, probPath: Collection<Point>, path: Collection<Point>) {
+
+    fun updateGridByStepsWithProbPos(
+        gridController: GridController,
+        probPath: Collection<Point>,
+        path: Collection<Point>
+    ) {
         updateGridBySteps(gridController, probPath.iterator(), ColorSigns.PROBABLE.color, getDelay()) {
-            // После завершения первой анимации начинаем вторую
-            updateGridBySteps(gridController, path.iterator(), ColorSigns.PATH.color, getDelay()/2)
+            updateGridBySteps(gridController, path.iterator(), ColorSigns.PATH.color, getDelay() / 2)
         }
-
     }
 
-    private fun updateGridBySteps(gridController: GridController, pointsIterator: Iterator<Point>, color: Color, delay: Double, onFinish: () -> Unit = {}) {
-        // Функция для обновления следующей точки
+    private fun updateGridBySteps(
+        gridController: GridController,
+        pointsIterator: Iterator<Point>,
+        color: Color,
+        delay: Double,
+        onFinish: () -> Unit = {}
+    ) {
         fun updateNextPoint() {
             if (pointsIterator.hasNext()) {
                 val point = pointsIterator.next()
                 Platform.runLater {
                     gridController.grid.children.forEach { node ->
-                        if (node is Pane && GridPane.getColumnIndex(node) == point.row && GridPane.getRowIndex(node) == point.col && node != gridController.startPane && node != gridController.endPane) {
+                        if (node is Pane &&
+                            GridPane.getColumnIndex(node) == point.row &&
+                            GridPane.getRowIndex(node) == point.col &&
+                            node != gridController.startPane &&
+                            node != gridController.endPane
+                        ) {
                             node.background = Background(BackgroundFill(color, null, null))
                         }
                     }
                 }
-
-                // Задаем задержку перед следующим обновлением
                 PauseTransition(Duration.millis(delay)).apply {
-                    setOnFinished { updateNextPoint() } // Продолжаем с следующей точки после задержки
+                    setOnFinished { updateNextPoint() }
                     play()
                 }
             } else {
-                onFinish() // Вызываем onFinish, если все точки обработаны
+                onFinish()
             }
         }
 
-        updateNextPoint() // Начинаем с первой точки
+        updateNextPoint()
     }
 
     fun printSolved(path: MutableList<Point>){
@@ -214,19 +239,19 @@ class Maze private constructor() {
     }
 
     fun print() {
-        for (row in mazeList){
-            for (cell in row){
+        mazeList.forEach { row ->
+            row.forEach { cell ->
                 print("$cell ")
             }
-            println();
+            println()
         }
         println()
     }
 
     fun getSolvedMaze(path: MutableList<Point>): Maze {
         val tempMaze = copyOf(this)
-        for (point in path){
-            if (point != startPos && point != goalPos){
+        path.forEach { point ->
+            if (point != startPos && point != goalPos) {
                 tempMaze[point] = Signs.PATH
             }
         }

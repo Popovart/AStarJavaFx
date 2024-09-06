@@ -72,6 +72,10 @@ class MazeController {
 
             val maze = Maze.fromFile(path)
             gridController = GridController(maze)
+
+            gridController.onPathClearedCallback = {
+                unlockPathButtons()
+            }
             // Добавляем GridPane в пользовательский интерфейс
             gridContainer.children.add(gridController.grid)
         }
@@ -80,9 +84,15 @@ class MazeController {
 
     }
 
+    private fun unlockPathButtons() {
+        startButton.isDisable = false
+        byStepsButton.isDisable = false
+    }
+
     @FXML
     private fun onStartButtonClick() {
         gridController.clearPath()
+
         maze = Maze(gridController.grid)
 
         if (!isStartOrGoalDefined()){
@@ -97,6 +107,9 @@ class MazeController {
 
         gridController = GridController(solvedMaze)
 
+        gridController.onPathClearedCallback = {
+            unlockPathButtons()
+        }
 
         clearGridContainer()
 
@@ -193,6 +206,10 @@ class MazeController {
             val rows = rowsInput.text.toInt()
             val cols = colsInput.text.toInt()
             gridController = GridController(rows, cols)
+
+            gridController.onPathClearedCallback = {
+                unlockPathButtons()
+            }
 
             clearGridContainer()
 

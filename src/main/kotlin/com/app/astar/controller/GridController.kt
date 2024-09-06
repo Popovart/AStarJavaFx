@@ -15,6 +15,8 @@ class GridController (private var rows: Int = 0, private var cols: Int = 0) {
     var startPane: Pane? = null
     var endPane: Pane? = null
 
+    var onPathClearedCallback: (() -> Unit)? = null
+
     init {
         initializeGrid()
     }
@@ -62,6 +64,8 @@ class GridController (private var rows: Int = 0, private var cols: Int = 0) {
                 }
             }
         }
+
+        onPathClearedCallback?.invoke()
     }
 
     fun clearAll(){
@@ -91,6 +95,8 @@ class GridController (private var rows: Int = 0, private var cols: Int = 0) {
                 val currentPane = this
                 if (event.button == MouseButton.PRIMARY) {
                     clearPath()
+
+
                     // Переключение цвета фона между белым и черным
                     val currentColor = background.fills[0].fill
 

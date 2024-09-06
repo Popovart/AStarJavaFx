@@ -49,18 +49,15 @@ class GridController (private var rows: Int = 0, private var cols: Int = 0) {
 
 
     /*
-    function for clearing PATH
+    function for clearing PATH and PROBABLE
      */
     fun clearPath(){
         for (node in grid.children){
             if (node is Pane) {
                 val backgroundColor = node.background?.fills?.firstOrNull()?.fill
-                if (backgroundColor == ColorSigns.PATH.color){
-                    // Создаем новый объект BackgroundFill с новым цветом
+                if (backgroundColor == ColorSigns.PATH.color || backgroundColor == ColorSigns.PROBABLE.color){
                     val newBackgroundFill = BackgroundFill(ColorSigns.UNVISITED.color, CornerRadii.EMPTY, Insets.EMPTY)
-                    // Создаем новый объект Background с новым BackgroundFill
                     val newBackground = Background(newBackgroundFill)
-                    // Устанавливаем новый фон для Pane
                     node.background = newBackground
                 }
             }

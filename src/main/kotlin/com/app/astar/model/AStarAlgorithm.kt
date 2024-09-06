@@ -67,37 +67,32 @@ class AStarAlgorithm (
     }
 
     init {
-
-//        println("maze.startPos ${maze.startPos}, maze.goalPos ${maze.goalPos}, maze.cols ${maze.colCount}, maze.rows ${maze.rowCount}")
-
-
         openSet.add(maze.startPos)
 
-        //start position init
-        // на данный момент это бессмысленная операция, так как там и так одни 0
+        // Инициализация начальной позиции
         priceMatrix[maze.startPos.col][maze.goalPos.row].g = 0
 
+        // Измерение времени выполнения алгоритма
         val startTime = System.nanoTime()
-        // Ваш алгоритм или блок кода
         findPath()
-
         val endTime = System.nanoTime()
 
+        val durationInNanoseconds = (endTime - startTime)
+        val durationInMilliseconds = durationInNanoseconds / 1_000_000.0  // более точное измерение в миллисекундах
+        val durationInSeconds = durationInNanoseconds / 1_000_000_000.0
 
-
-        val duration = (endTime - startTime)
-        val durationInMiliseconds = duration / 1000000
-        val durationInSeconds = duration / 1000000000
-//        println("Время выполнения: $duration наносекунд")
-        if (message.isEmpty()){
-
-            message = "Time taken by function findPath: ${durationInSeconds.toDouble()} seconds"
+        // Если время меньше миллисекунды, выводим миллисекунды с большей точностью
+        if (durationInMilliseconds < 1) {
+            message = "Time taken by function findPath: $durationInMilliseconds milliseconds"
+        } else {
+            message = "Time taken by function findPath: $durationInSeconds seconds"
         }
     }
 
     private fun getNoPathInfo() : String{
         return "It's impossible to find the goal position. Walls nearby"
     }
+
 
     private fun findPath(){
 

@@ -47,7 +47,6 @@ class MazeController {
     private var label: Label? = null
     private lateinit var path: String
 
-    // Метод для настройки и инициализации GridController
     private fun setupGridController(maze: Maze) {
         gridController = GridController(maze)
         gridController.onPathClearedCallback = { unlockPathButtons() }
@@ -55,7 +54,6 @@ class MazeController {
         gridContainer.children.add(gridController.grid)
     }
 
-    // Универсальный метод для разблокировки кнопок
     private fun unlockPathButtons() {
         startButton.isDisable = false
         byStepsButton.isDisable = false
@@ -98,7 +96,6 @@ class MazeController {
         }
     }
 
-    // Обобщенный метод для работы с лабиринтом
     private fun processMaze(action: (Maze) -> Unit) {
         gridController.clearPath()
         maze = Maze(gridController.grid)

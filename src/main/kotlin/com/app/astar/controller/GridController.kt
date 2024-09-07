@@ -25,7 +25,6 @@ class GridController(private var rows: Int = 0, private var cols: Int = 0) {
         initializeGridFromMaze(maze)
     }
 
-    // Метод для получения цвета панели на основе знака
     private fun getPaneColor(sign: Signs): Color {
         return when (sign) {
             Signs.EXIT -> ColorSigns.EXIT.color
@@ -37,7 +36,6 @@ class GridController(private var rows: Int = 0, private var cols: Int = 0) {
         }
     }
 
-    // Объединенный метод для очистки панелей
     private fun clearNodes(condition: (Color) -> Boolean) {
         for (node in grid.children) {
             if (node is Pane) {
@@ -49,20 +47,17 @@ class GridController(private var rows: Int = 0, private var cols: Int = 0) {
         }
     }
 
-    // Очистка только путей и вероятных путей
     fun clearPath() {
         clearNodes { it == ColorSigns.PATH.color || it == ColorSigns.PROBABLE.color }
         onPathClearedCallback?.invoke()
     }
 
-    // Полная очистка сетки
     fun clearAll() {
         clearNodes { it != ColorSigns.UNVISITED.color }
         startPane = null
         endPane = null
     }
 
-    // Метод для создания ячеек с обработчиками кликов
     private fun createPane(paneBackgroundColor: Color): Pane {
         return Pane().apply {
             background = Background(BackgroundFill(paneBackgroundColor, null, null))
@@ -75,7 +70,6 @@ class GridController(private var rows: Int = 0, private var cols: Int = 0) {
         }
     }
 
-    // Обработчик кликов для панелей
     private fun handlePaneClick(currentPane: Pane, button: MouseButton) {
         clearPath()
 
@@ -86,7 +80,6 @@ class GridController(private var rows: Int = 0, private var cols: Int = 0) {
         }
     }
 
-    // Логика переключения между стеной и пустым местом
     private fun toggleWall(currentPane: Pane) {
         val currentColor = currentPane.background.fills[0].fill
         if (currentPane == startPane) startPane = null
@@ -96,7 +89,6 @@ class GridController(private var rows: Int = 0, private var cols: Int = 0) {
         updatePaneColor(currentPane, newColor)
     }
 
-    // Логика установки стартовой и конечной точек
     private fun setStartOrEnd(currentPane: Pane) {
         val currentColor = currentPane.background.fills[0].fill
         var newColor = if (currentColor == ColorSigns.START.color) ColorSigns.EXIT.color else ColorSigns.START.color
@@ -121,12 +113,10 @@ class GridController(private var rows: Int = 0, private var cols: Int = 0) {
         updatePaneColor(currentPane, newColor)
     }
 
-    // Метод для обновления цвета панели
     private fun updatePaneColor(pane: Pane?, color: Color) {
         pane?.background = Background(BackgroundFill(color, null, null))
     }
 
-    // Инициализация сетки
     private fun initializeGrid() {
         for (row in 0 until rows) {
             for (col in 0 until cols) {
@@ -136,7 +126,6 @@ class GridController(private var rows: Int = 0, private var cols: Int = 0) {
         }
     }
 
-    // Инициализация сетки из лабиринта
     private fun initializeGridFromMaze(maze: Maze) {
         for (rowIndex in maze.mazeList.indices) {
             for (colIndex in maze.mazeList[rowIndex].indices) {
